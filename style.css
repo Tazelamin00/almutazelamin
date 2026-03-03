@@ -1,0 +1,1306 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none
+}
+
+html{
+    height: 100%;
+}
+@font-face {
+    font-family: 'Neue Montreal-Regular';
+    src: url(fonts/NeueMontreal-Regular.otf);
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Neue Montreal-Bold';
+    src: url(fonts/NeueMontreal-Bold.otf);
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Neue Montreal-Light';
+    src: url(fonts/NeueMontreal-Light.otf);
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ChicagoFLF';
+    src: url(fonts/ChicagoFLF.ttf);
+    font-style: normal;
+}
+
+
+body{
+    height: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-image: url(img/background.jpg);
+    background-size:cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
+}
+
+/* Keeps about page background exactly the same as index */
+.about_page{
+    background-image: url(img/background.jpg) !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+/* HEADER */
+header{
+    
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .logo{
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        width: 80px;
+        height: auto;
+    }
+    .navigation_links{
+        padding-left: 960px;
+        ul{
+            list-style: none;
+            display: block;
+            li a{
+                display: inline-block;
+                padding: 0.5em;
+                font-family: 'Courier New', Courier, monospace;
+                text-decoration: none;
+                color: #000;
+                font-size: 16px;
+                transition: color 0.3s ease;
+
+                &:hover{
+                    color: #FA5A28;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    .personal_info{
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        p{
+            padding-bottom: 1.25em;
+            font-size: 12px;
+            color: #000;
+        }
+    }
+}
+
+marquee{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    margin-top: 20px;
+    padding: 4px 24px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+
+    .name_occupation{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.1em;
+        h2{
+            font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+            color: #000;
+        }
+        p{
+            font-family: 'Neue Montreal-Light', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            text-align: center;    
+            line-height: 1.5;
+            display: block;
+            color: #000;
+        }
+    }
+
+    .name_description{
+        padding: 1em;
+        h2{
+            font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            color: #000;
+        }
+    }
+
+    .skillset_pic{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        
+        .personal_picture{
+        width: 100px;
+        height: auto;
+        position: relative;
+        margin-bottom: 60px;
+        }
+        .skillset{
+            padding: 1em;
+            gap: 0.5em;
+            p{
+                padding: 0.5em;
+                font-size: 20px;
+                font-weight: 100;
+            }
+            ul {
+                list-style: none;
+                text-decoration: none;
+                li{
+                    text-align: right;
+                    font-weight: light;
+                    font-size: 14px;
+                    color: #000;
+                    padding: 0.25em;
+                }
+            } 
+        }
+    }
+    
+    .information{
+        font-family: 'Neue Montreal-Light', Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        text-align: center;    
+        line-height: 1.5;
+        display: block;
+        color: #000;
+    }
+
+    .about_description{
+        /* Keeps heading, image, and paragraph stacked in the center */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1em;
+        margin-top: 30px;
+        h2{
+            font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            color: #000;
+        }
+        .personal_picture{
+            display: block;
+            width: 180px;
+            height: auto;
+            position: relative;
+            top: 28px;
+            margin-bottom: 84px;
+        }
+        p{
+            margin-top: -8px;
+            text-align: center;
+        }
+    }
+
+
+
+    .footer{
+        position: fixed;
+        right: 16px;
+        bottom: 8px;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        width: 100%;
+       /* gap: 16px;*/
+        padding: 16px 0px;
+        box-sizing: border-box;
+        font-weight: 100;
+        font-size: 12px;
+        color: #000;
+    }
+    .footer .homepage_image{
+        position: fixed;
+        left: 16px;
+        bottom: 16px;
+        justify-self: start;
+        width: 72px;
+        height: auto;
+        cursor: pointer;
+    }
+
+    .footer .home_button{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+    .footer .footer_email a{
+        color: inherit;
+        text-decoration: none;
+    }
+    .footer .footer_email{
+        display: block;
+    }
+    .footer p:nth-of-type(1){
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 14px;
+        grid-column: 2;
+        justify-self: center;
+padding-top: 48px;    }
+    .footer p:nth-of-type(2){
+        grid-column: 3;
+        justify-self: end;
+        margin: 0;
+    }
+    .footer .color_block{
+        position: absolute;
+        left: 12px;
+        bottom: -36px;
+        display: flex;
+        gap: 6px;
+    }
+}
+
+    /* WORK + ABOUT PAGE: keep top header/nav spacing aligned */
+    .work_page header,
+    .about_page header{
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        min-height: 120px;
+    }
+
+    /* Keeps personal info on the right side for work and about pages */
+    .work_page header .personal_info,
+    .about_page header .personal_info{
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        text-align: right;
+    }
+
+    /* Centers the work page content area on the screen */
+    .work_page main{
+        min-height: calc(100vh - 120px);
+        justify-content: center;
+        padding-top: 0;
+        position: relative;
+    }
+
+    /* Centers work page content block (both width and height) */
+    .work_page .work_center_context{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Work page: two-column text block (heading left, list right) */
+    .work_page .name_description{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 160px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .work_page .name_description h2{
+        font-size: 16px;
+        text-align: left;
+        position: relative;
+        left: -92px;
+    }
+
+    .work_page .name_description ul{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
+        font-size: 16px;
+    }
+
+    .work_page .name_description ul li{
+        padding-bottom: 0.25em;
+        font-size: inherit;
+        
+    }
+
+    /* Work page image sits behind the two-column text block */
+    .work_page .personal_picture{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 200px;
+        z-index: 1;
+    }
+
+    /* Keeps name and occupation directly above the image row */
+    .work_page .name_occupation{
+        margin-bottom: 12px;
+    }
+
+    /* Container for About (left), image (center), and Work (right) */
+    .work_page .work_image_navigation{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 56px;
+        margin-top: 0;
+    }
+
+    /* Reusable style for the three links */
+    .work_page .work_link{
+        font-family: 'Courier New', Courier, monospace;
+        text-decoration: none;
+        color: #000;
+        font-size: 16px;
+    }
+
+    .work_page .work_link:hover{
+        color: #FA5A28;
+        text-decoration: underline;
+    }
+
+    /* Places Github below the image area */
+    .work_page .work_bottom_link{
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Keeps work page footer perfectly centered across the full width */
+    .work_page .footer{
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    /* Keeps about page footer in the same position model as index */
+    .about_page .footer{
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    /* Ensures email text is centered in the middle footer column */
+    .work_page .footer p:nth-of-type(1){
+        justify-self: center;
+        text-align: center;
+    }
+
+    /* Keeps about page email in the same centered position as index */
+    .about_page .footer p:nth-of-type(1){
+        justify-self: center;
+        text-align: center;
+    }
+
+    /* Aligns the copyright line to the right side with personal info */
+    .work_page .footer p:nth-of-type(2){
+        grid-column: 3;
+        justify-self: end;
+        text-align: right;
+        margin-right: 20px;
+        margin-top: 0;
+    }
+
+    /* Keeps about page reserved text aligned the same as index */
+    .about_page .footer p:nth-of-type(2){
+        grid-column: 3;
+        justify-self: end;
+        text-align: right;
+        margin-right: 20px;
+        margin-top: 0;
+    }
+
+    .work_page .footer .city_clock,
+    .about_page .footer .city_clock,
+    .home_page .city_clock{
+        font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        position: fixed;
+        right: 20px;
+        left: auto;
+        transform: none;
+        bottom: 10px;
+        z-index: 4;
+        font-size: 12px;
+        grid-column: auto;
+        justify-self: auto;
+        text-align: right;
+        margin-right: 0;
+        margin-top: 0;
+        padding-top: 0;
+        white-space: nowrap;
+    }
+
+    /* Moves the centered name + image + navigation block upward together */
+    .work_page .name_occupation,
+    .work_page .work_image_navigation,
+    .work_page .work_bottom_link{
+        position: relative;
+        top: -100px;
+    }
+
+    /* ABOUT link transition layer (index page) */
+    .page_transition{
+        position: fixed;
+        inset: 0;
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transition: none;
+    }
+
+    /* Active state shown right before page navigation */
+    .page_transition.is_active{
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Fade-out state used before opening about.html */
+    .page_transition.is_closing{
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    /* Full-screen transition video */
+    .page_transition .transition_video{
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: none;
+    }
+
+    /* Overlay content shown on top of transition video */
+    .page_transition .transition_content{
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+    }
+
+    .page_transition .transition_logo{
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        width: 80px;
+        height: auto;
+    }
+
+    .page_transition .transition_info{
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        text-align: right;
+        color: #fff;
+        font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
+        font-size: 12px;
+    }
+
+    .page_transition .transition_info p{
+        margin-bottom: 1.25em;
+    }
+
+    .home_page .mail_icon{
+        display: none;
+        text-decoration: none;
+        color: #000;
+        font-size: 34px;
+        font-weight: 300;
+        opacity: 0.65;
+        line-height: 1;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .menu_button{
+        display: none;
+    }
+
+@media (max-width: 1024px){
+    body{
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-attachment: scroll;
+    }
+
+    .about_page{
+        overflow: hidden;
+        height: 100dvh;
+        min-height: 100dvh;
+        overscroll-behavior: none;
+    }
+
+    header{
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 16px 20px;
+        min-height: auto;
+    }
+
+    header .logo{
+        position: static;
+        width: 68px;
+        flex-shrink: 0;
+    }
+
+    header .navigation_links{
+        padding-left: 0;
+        margin: 0 auto 0 20px;
+    }
+
+    header .navigation_links ul{
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    header .navigation_links ul li a{
+        padding: 0.25em 0.4em;
+        font-size: 15px;
+    }
+
+    header .personal_info{
+        position: static;
+        text-align: right;
+        max-width: 180px;
+    }
+
+    header .personal_info p{
+        padding-bottom: 0.6em;
+        line-height: 1.35;
+    }
+
+    .work_page header,
+    .about_page header{
+        padding: 16px 20px;
+        min-height: auto;
+    }
+
+    .work_page header .personal_info,
+    .about_page header .personal_info{
+        position: static;
+        right: auto;
+        top: auto;
+    }
+
+    marquee{
+        margin-top: 8px;
+        padding: 4px 12px;
+        font-size: 13px;
+    }
+
+    main{
+        justify-content: flex-start;
+        min-height: calc(100vh - 120px);
+        padding: 20px 16px 140px;
+    }
+
+    .name_occupation h2{
+        font-size: 22px;
+    }
+
+    .name_occupation p{
+        font-size: 13px;
+    }
+
+    .skillset_pic{
+        gap: 24px;
+        align-items: flex-start;
+    }
+
+    .skillset_pic .personal_picture{
+        margin-bottom: 20px;
+    }
+
+    .skillset_pic .skillset p{
+        font-size: 18px;
+    }
+
+    .about_description{
+        padding: 0.5em 1em 0;
+        margin-top: 24px;
+    }
+
+    .about_description .personal_picture{
+        position: static;
+        top: auto;
+        margin: 10px 0 16px;
+        width: 160px;
+    }
+
+    .about_description p{
+        margin-top: -4px;
+    }
+
+    .about_description .information{
+        max-width: 700px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .about_description .information br{
+        display: none;
+    }
+
+    .work_page main{
+        min-height: auto;
+        padding-top: 12px;
+    }
+
+    .work_page .work_center_context{
+        position: static;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding-top: 8px;
+    }
+
+    .work_page .name_description{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 60px;
+        position: static;
+    }
+
+    .work_page .name_description h2{
+        left: 0;
+        font-size: 15px;
+        max-width: 420px;
+    }
+
+    .work_page .name_description ul{
+        font-size: 15px;
+    }
+
+    .work_page .personal_picture{
+        position: static;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: min(72vw, 360px);
+        height: auto;
+    }
+
+    .work_page .name_occupation,
+    .work_page .work_image_navigation,
+    .work_page .work_bottom_link{
+        top: 0;
+    }
+
+    .work_page .work_image_navigation{
+        gap: 28px;
+        flex-wrap: nowrap;
+    }
+
+    .work_page .work_link{
+        font-size: 15px;
+    }
+
+    .work_page .work_bottom_link{
+        margin-top: 14px;
+    }
+
+    .footer,
+    .work_page .footer,
+    .about_page .footer{
+        position: static;
+        left: auto;
+        right: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 24px 0 16px;
+    }
+
+    .footer .homepage_image{
+        position: static;
+        left: auto;
+        bottom: auto;
+        width: 64px;
+        order: -1;
+    }
+
+    .footer .color_block{
+        position: static;
+        left: auto;
+        bottom: auto;
+        order: 0;
+    }
+
+    .footer p:nth-of-type(1),
+    .work_page .footer p:nth-of-type(1),
+    .about_page .footer p:nth-of-type(1){
+        grid-column: auto;
+        justify-self: auto;
+        padding-top: 0;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .footer p:nth-of-type(2),
+    .work_page .footer p:nth-of-type(2),
+    .about_page .footer p:nth-of-type(2){
+        grid-column: auto;
+        justify-self: auto;
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .work_page .footer .city_clock,
+    .about_page .footer .city_clock,
+    .home_page .city_clock{
+        position: fixed;
+        right: 16px;
+        left: auto;
+        transform: none;
+        bottom: 10px;
+        z-index: 4;
+        font-size: 11px;
+        grid-column: auto;
+        justify-self: auto;
+        margin-right: 0;
+        text-align: right;
+    }
+
+    .page_transition .transition_logo{
+        left: 14px;
+        top: 14px;
+        width: 68px;
+    }
+
+    .page_transition .transition_info{
+        right: 14px;
+        top: 14px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px){
+    .page_transition .transition_info p:first-child{
+        position: fixed;
+        right: 16px;
+        left: auto;
+        transform: none;
+        bottom: 10px;
+        z-index: 4;
+        font-size: 11px;
+        text-align: right;
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+    }
+
+    header{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    header .navigation_links{
+        margin: 0;
+        padding-left: 0;
+        width: 100%;
+    }
+
+    .about_page .menu_button,
+    .work_page .menu_button{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        z-index: 7;
+        width: auto;
+        height: auto;
+        padding: 8px 10px;
+        text-decoration: none;
+        color: #000;
+        font-size: 14px;
+        font-weight: 300;
+        opacity: 0.7;
+        line-height: 1.2;
+        font-family: 'Courier New', Courier, monospace;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .about_page header{
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 0;
+        min-height: 0;
+    }
+
+    .work_page header{
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 0;
+        min-height: 0;
+    }
+
+    .about_page header .logo{
+        position: fixed;
+        left: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        width: 68px;
+        height: auto;
+        z-index: 5;
+    }
+
+    .work_page header .logo{
+        position: fixed;
+        left: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        width: 68px;
+        height: auto;
+        z-index: 5;
+    }
+
+    .about_page header .personal_info{
+        display: none;
+    }
+
+    .about_page .footer .footer_email{
+        display: none;
+    }
+
+    .work_page header .personal_info{
+        display: none;
+    }
+
+    .about_page marquee{
+        display: block;
+        margin-top: calc(106px + env(safe-area-inset-top));
+    }
+
+    .work_page marquee{
+        display: block;
+        margin-top: calc(106px + env(safe-area-inset-top));
+    }
+
+    .about_page header .navigation_links,
+    .work_page header .navigation_links{
+        display: none;
+        width: auto;
+        margin: 0;
+        position: fixed;
+        right: 16px;
+        top: calc(64px + env(safe-area-inset-top));
+        z-index: 6;
+    }
+
+    .about_page header.nav_open .navigation_links,
+    .work_page header.nav_open .navigation_links{
+        display: block;
+    }
+
+    .about_page header .navigation_links ul,
+    .work_page header .navigation_links ul{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+    }
+
+    header .navigation_links ul{
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    header .personal_info{
+        text-align: left;
+        max-width: none;
+    }
+
+    header .personal_info p{
+        font-size: 11px;
+        padding-bottom: 0.4em;
+    }
+
+    main{
+        padding: 16px 14px 130px;
+    }
+
+    .name_occupation h2{
+        font-size: 19px;
+    }
+
+    .name_description h2{
+        font-size: 16px;
+    }
+
+    .skillset_pic{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .skillset_pic .skillset ul li{
+        text-align: center;
+    }
+
+    .work_page .work_image_navigation{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        justify-items: center;
+    }
+
+    .work_page .homepage_personal_picture{
+        width: 150px !important;
+    }
+
+    .work_page .work_center_context{
+        position: relative;
+    }
+
+    .work_page .name_description{
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+        text-align: left;
+        position: relative;
+        z-index: 3;
+        width: min(100%, 340px);
+    }
+
+    .work_page .name_description h2{
+        font-family: 'Neue Montreal-Light', Arial, Helvetica, sans-serif;
+        font-weight: 300;
+        text-align: left;
+        max-width: 320px;
+        position: relative;
+        left: -6px;
+    }
+
+    .work_page .name_description ul{
+        font-size: 22px;
+        align-self: flex-end;
+        text-align: right;
+        margin-top: 14px;
+        position: relative;
+        z-index: 4;
+    }
+
+    .work_page .personal_picture{
+        position: absolute;
+        left: 50%;
+        top: 98px;
+        transform: translateX(-50%);
+        width: 136px;
+        height: 136px;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    .about_description h2{
+        font-size: 16px;
+        line-height: 1.4;
+        position: relative;
+        top: 14px;
+    }
+
+    .about_description .information{
+        font-size: 12px;
+    }
+
+    .footer .homepage_image{
+        width: 56px;
+    }
+
+    .footer p:nth-of-type(1){
+        font-size: 12px;
+    }
+
+    .footer p:nth-of-type(2){
+        font-size: 11px;
+    }
+
+    marquee{
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 769px){
+    .city_clock{
+        display: none;
+    }
+}
+
+@media (max-width: 480px){
+    .page_transition .transition_info p:first-child{
+        right: 12px;
+        bottom: 10px;
+    }
+
+    header .logo{
+        width: 68px;
+    }
+
+    .work_page .work_link,
+    header .navigation_links ul li a{
+        font-size: 14px;
+    }
+
+    .name_occupation h2{
+        font-size: 17px;
+    }
+
+    .about_description h2{
+        font-size: 14px;
+        position: relative;
+        top: 12px;
+    }
+
+    .about_description .personal_picture{
+        width: 136px;
+    }
+
+    marquee{
+        padding: 3px 8px;
+    }
+
+    .about_page .menu_button,
+    .work_page .menu_button{
+        right: 16px;
+        top: calc(12px + env(safe-area-inset-top));
+        font-size: 13px;
+    }
+
+    .about_page header .logo{
+        left: 16px;
+        top: calc(12px + env(safe-area-inset-top));
+        width: 68px;
+    }
+
+    .work_page header .logo{
+        left: 16px;
+        top: calc(12px + env(safe-area-inset-top));
+        width: 68px;
+    }
+
+    .about_page marquee{
+        margin-top: calc(100px + env(safe-area-inset-top));
+    }
+
+    .work_page marquee{
+        margin-top: calc(100px + env(safe-area-inset-top));
+    }
+
+    .about_page header .navigation_links,
+    .work_page header .navigation_links{
+        right: 12px;
+        top: calc(58px + env(safe-area-inset-top));
+    }
+}
+
+@media (max-width: 768px){
+    .home_page{
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        position: relative;
+        overscroll-behavior: none;
+    }
+
+    .home_page::before{
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url(img/background.jpg);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .home_page header{
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 0;
+        min-height: 0;
+    }
+
+    .home_page header .logo{
+        position: fixed;
+        left: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        width: 68px;
+        height: auto;
+        z-index: 5;
+    }
+
+    .home_page header .personal_info{
+        display: none;
+    }
+
+    .home_page .mail_icon{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        font-size: 42px;
+        z-index: 5;
+    }
+
+    .home_page marquee{
+        display: block;
+        margin-top: calc(106px + env(safe-area-inset-top));
+    }
+
+    .home_page main{
+        min-height: calc(100dvh - 104px);
+        justify-content: center;
+        padding: 0 16px 18px;
+        margin-top: -28px;
+    }
+
+    .home_page .name_occupation{
+        gap: 0;
+        margin-top: 0;
+    }
+
+    .home_page .name_occupation h2{
+        font-size: 30px;
+        letter-spacing: 0.02em;
+        line-height: 1;
+    }
+
+    .home_page .name_occupation p{
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .home_page .work_image_navigation{
+        display: grid !important;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 16px;
+        width: min(380px, 100%);
+        margin: 12px auto 0;
+    }
+
+    .home_page .homepage_personal_picture{
+        width: clamp(150px, 46vw, 190px) !important;
+        display: block;
+    }
+
+    .home_page .work_link{
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .home_page .work_bottom_link{
+        margin-top: 14px;
+    }
+
+    .home_page .footer{
+        display: none;
+    }
+
+    .home_page .footer .color_block{
+        display: none;
+    }
+}
+
+@media (max-width: 480px){
+    .home_page{
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden;
+        overscroll-behavior: none;
+    }
+
+    .home_page main{
+        min-height: calc(100dvh - 96px);
+        justify-content: center;
+        padding: 0 14px 14px;
+        margin-top: -24px;
+    }
+
+    .home_page .name_occupation h2{
+        font-size: 26px;
+    }
+
+    .home_page .name_occupation{
+        margin-top: 0;
+    }
+
+    .home_page .name_occupation p{
+        font-size: 14px;
+    }
+
+    .home_page .work_image_navigation{
+        gap: 12px;
+        width: min(320px, 100%);
+    }
+
+    .home_page marquee{
+        margin-top: calc(100px + env(safe-area-inset-top));
+    }
+
+    .home_page .work_link{
+        font-size: 13px;
+    }
+
+    .home_page .mail_icon{
+        font-size: 40px;
+        right: 16px;
+        top: calc(12px + env(safe-area-inset-top));
+    }
+
+    .home_page header .logo{
+        left: 16px;
+        top: calc(12px + env(safe-area-inset-top));
+        width: 68px;
+    }
+
+}
