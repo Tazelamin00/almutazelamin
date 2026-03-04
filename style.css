@@ -954,18 +954,47 @@ padding-top: 48px;    }
 
     .about_page header .navigation_links,
     .work_page header .navigation_links{
-        display: none;
+        display: block;
         width: auto;
         margin: 0;
         position: fixed;
         right: 16px;
         top: calc(64px + env(safe-area-inset-top));
         z-index: 6;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(24px);
+        transition: transform 0.32s ease, opacity 0.32s ease;
     }
 
     .about_page header.nav_open .navigation_links,
     .work_page header.nav_open .navigation_links{
-        display: block;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(0);
+    }
+
+    .about_page marquee,
+    .about_page main,
+    .about_page .footer,
+    .about_page header .logo,
+    .work_page marquee,
+    .work_page main,
+    .work_page .footer,
+    .work_page header .logo{
+        transition: transform 0.32s ease;
+        will-change: transform;
+    }
+
+    .about_page.menu_open marquee,
+    .about_page.menu_open main,
+    .about_page.menu_open .footer,
+    .about_page.menu_open header .logo,
+    .work_page.menu_open marquee,
+    .work_page.menu_open main,
+    .work_page.menu_open .footer,
+    .work_page.menu_open header .logo{
+        transform: translateX(-120px);
     }
 
     .about_page header .navigation_links ul,

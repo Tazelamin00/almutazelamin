@@ -139,8 +139,11 @@ const pageHeader = document.querySelector('.about_page header, .work_page header
 const menuButton = document.querySelector('.about_page .menu_button, .work_page .menu_button');
 
 if (pageHeader && menuButton) {
+  const pageBody = document.body;
+
   const closeMenu = function () {
     pageHeader.classList.remove('nav_open');
+    pageBody.classList.remove('menu_open');
     menuButton.setAttribute('aria-expanded', 'false');
     menuButton.setAttribute('aria-label', 'Open navigation');
     menuButton.textContent = 'Menu';
@@ -148,6 +151,7 @@ if (pageHeader && menuButton) {
 
   const openMenu = function () {
     pageHeader.classList.add('nav_open');
+    pageBody.classList.add('menu_open');
     menuButton.setAttribute('aria-expanded', 'true');
     menuButton.setAttribute('aria-label', 'Close navigation');
     menuButton.textContent = 'Menu';
