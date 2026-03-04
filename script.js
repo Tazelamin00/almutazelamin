@@ -151,9 +151,10 @@ if (pageHeader && menuButton) {
     menuButton.setAttribute('aria-expanded', 'true');
     menuButton.setAttribute('aria-label', 'Opening navigation');
     pageBody.classList.add('menu_navigating');
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
     setTimeout(function () {
-      window.location.href = 'menu.html';
+      window.location.href = `menu.html?from=${encodeURIComponent(currentPage)}`;
     }, 350);
   });
 }
@@ -166,6 +167,30 @@ if (menuPageBody) {
     requestAnimationFrame(function () {
       menuPageBody.classList.remove('is_entering');
     });
+  });
+}
+
+const menuCloseButton = document.querySelector('.menu_page .menu_close_button');
+
+if (menuCloseButton) {
+  menuCloseButton.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const fromPage = searchParams.get('from');
+    const allowedPages = ['about.html', 'work.html', 'index.html'];
+
+    if (fromPage && allowedPages.includes(fromPage)) {
+      window.location.href = fromPage;
+      return;
+    }
+
+    if (document.referrer && document.referrer.startsWith(window.location.origin)) {
+      window.location.href = document.referrer;
+      return;
+    }
+
+    window.location.href = 'index.html';
   });
 }
 

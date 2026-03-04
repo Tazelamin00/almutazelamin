@@ -33,7 +33,7 @@ body{
     height: 100%;
     min-height: 100vh;
     overflow: hidden;
-    background-image: url(img/background.jpg);
+    background-image: url(img/bckgrnds/background.jpg);
     background-size:cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -54,6 +54,10 @@ body{
 
 .menu_page{
     overflow: hidden;
+    background-image: url("img/bckgrnds/Navy Pier.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .menu_page.is_entering{
@@ -64,27 +68,85 @@ body{
     min-height: calc(100vh - 40px);
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: 24px;
 }
 
 .menu_page .menu_page_navigation{
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 14px;
+    align-items: flex-start;
+    text-align: left;
+    gap: 8px;
 }
 
 .menu_page .menu_page_navigation a{
     text-decoration: none;
-    color: #000;
+    color: #fff;
     font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
-    font-size: 32px;
+    font-size: 56px;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.menu_page .menu_close_button{
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top));
+    right: 20px;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.7;
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    z-index: 10;
+}
+
+.about_page .page_home_button,
+.work_page .page_home_button{
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+}
+
+.about_page .page_home_image,
+.work_page .page_home_image{
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+}
+
+.about_page .footer .home_button,
+.work_page .footer .home_button{
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.about_page .footer .homepage_image,
+.work_page .footer .homepage_image{
+    position: static;
+    width: 72px;
+    height: auto;
+    display: block !important;
+    cursor: pointer;
 }
 
 /* Keeps about page background exactly the same as index */
 .about_page{
-    background-image: url(img/background.jpg) !important;
+    background-image: url(img/bckgrnds/background.jpg) !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
@@ -242,7 +304,8 @@ main{
         .personal_picture{
             display: block;
             width: 180px;
-            height: auto;
+            height: 180px;
+            object-fit: cover;
             position: relative;
             top: 28px;
             margin-bottom: 84px;
@@ -366,22 +429,58 @@ padding-top: 48px;    }
         font-size: 16px;
         text-align: left;
         position: relative;
-        left: -92px;
+        left: -164px;
     }
 
-    .work_page .name_description ul{
+    .work_page .work_skills_column{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        text-align: right;
+        position: relative;
+        left: 64px;
+        gap: 28px;
+    }
+
+    .work_page .name_description .skills_list{
         list-style: none;
         margin: 0;
         padding: 0;
-        text-align: left;
+        text-align: right;
         font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
         font-size: 16px;
     }
 
-    .work_page .name_description ul li{
+    .work_page .name_description .skills_list li{
         padding-bottom: 0.25em;
         font-size: inherit;
         
+    }
+
+    .work_page .work_additional_info{
+        display: none;
+        flex-direction: column;
+        gap: 34px;
+    }
+
+    .work_page .work_info_group h3{
+        font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    .work_page .work_info_group ul{
+        list-style: none;
+        margin: 12px 0 0;
+        padding: 0;
+        font-family: 'ChicagoFLF', 'Courier New', Courier, monospace;
+        font-size: 18px;
+        letter-spacing: 0.08em;
+        line-height: 1.35;
+    }
+
+    .work_page .work_info_group ul li{
+        padding-bottom: 0.18em;
     }
 
     /* Work page image sits behind the two-column text block */
@@ -577,6 +676,13 @@ padding-top: 48px;    }
         font-family: 'Courier New', Courier, monospace;
     }
 
+    .home_page .mail_icon img{
+        width: 0.78em;
+        height: 0.78em;
+        display: block;
+        object-fit: contain;
+    }
+
     .menu_button{
         display: none;
     }
@@ -594,6 +700,12 @@ padding-top: 48px;    }
         height: auto;
         min-height: 100dvh;
         overscroll-behavior: auto;
+    }
+
+    .work_page{
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-attachment: fixed !important;
     }
 
     header{
@@ -692,6 +804,8 @@ padding-top: 48px;    }
         top: auto;
         margin: 10px 0 16px;
         width: 160px;
+        height: 160px;
+        object-fit: cover;
     }
 
     .about_description p{
@@ -740,8 +854,20 @@ padding-top: 48px;    }
         max-width: 420px;
     }
 
-    .work_page .name_description ul{
+    .work_page .name_description .skills_list{
         font-size: 15px;
+    }
+
+    .work_page .work_skills_column{
+        left: 0;
+    }
+
+    .work_page .work_info_group h3{
+        font-size: 15px;
+    }
+
+    .work_page .work_info_group ul{
+        font-size: 16px;
     }
 
     .work_page .personal_picture{
@@ -835,16 +961,6 @@ padding-top: 48px;    }
         justify-self: auto;
         margin-right: 0;
         text-align: right;
-    }
-
-    .about_page .footer .city_clock{
-        position: static;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        font-size: 12px;
-        text-align: center;
-        margin: 0;
     }
 
     .page_transition .transition_logo{
@@ -1064,24 +1180,57 @@ padding-top: 48px;    }
         left: -6px;
     }
 
-    .work_page .name_description ul{
-        font-size: 22px;
+    .work_page .work_skills_column{
         align-self: flex-end;
+        align-items: flex-end;
+        left: 0;
+        gap: 20px;
+    }
+
+    .work_page .name_description .skills_list{
+        font-size: 22px;
         text-align: right;
         margin-top: 14px;
         position: relative;
         z-index: 4;
     }
 
+    .work_page .work_additional_info{
+        display: flex;
+        align-self: flex-start;
+        position: relative;
+        left: -6px;
+        text-align: left;
+        margin-top: 80px;
+        gap: 22px;
+    }
+
+    .work_page .work_info_group h3{
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 14px;
+        letter-spacing: 0.04em;
+        text-align: left;
+    }
+
+    .work_page .work_info_group ul{
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        line-height: 1.35;
+        text-align: left;
+    }
+
     .work_page .personal_picture{
-        position: absolute;
+        display: block;
+        position: fixed;
         left: 50%;
-        top: 98px;
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%, -50%);
         width: 136px;
         height: 136px;
         object-fit: cover;
         z-index: 1;
+        pointer-events: none;
     }
 
     .about_description h2{
@@ -1116,6 +1265,23 @@ padding-top: 48px;    }
     .city_clock{
         display: none;
     }
+
+    .work_page .footer .city_clock,
+    .about_page .footer .city_clock{
+        display: block;
+        position: fixed;
+        right: 20px;
+        bottom: 10px;
+        left: auto;
+        transform: none;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .work_page .header_clock,
+    .about_page .header_clock{
+        display: none;
+    }
 }
 
 @media (max-width: 480px){
@@ -1145,6 +1311,8 @@ padding-top: 48px;    }
 
     .about_description .personal_picture{
         width: 136px;
+        height: 136px;
+        object-fit: cover;
     }
 
     marquee{
@@ -1201,7 +1369,7 @@ padding-top: 48px;    }
         content: "";
         position: fixed;
         inset: 0;
-        background-image: url(img/background.jpg);
+        background-image: url(img/bckgrnds/background.jpg);
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
@@ -1244,7 +1412,7 @@ padding-top: 48px;    }
 
     .home_page marquee{
         display: block;
-        margin-top: calc(106px + env(safe-area-inset-top));
+        margin-top: calc(72px + env(safe-area-inset-top));
     }
 
     .home_page main{
@@ -1281,7 +1449,7 @@ padding-top: 48px;    }
     }
 
     .home_page .homepage_personal_picture{
-        width: clamp(150px, 46vw, 190px) !important;
+        width: clamp(110px, 34vw, 130px) !important;
         display: block;
     }
 
@@ -1336,7 +1504,7 @@ padding-top: 48px;    }
     }
 
     .home_page marquee{
-        margin-top: calc(68px + env(safe-area-inset-top));
+        margin-top: calc(100px + env(safe-area-inset-top));
     }
 
     .home_page .work_link{
@@ -1355,4 +1523,54 @@ padding-top: 48px;    }
         width: 68px;
     }
 
+}
+
+.work_page:not(.home_page){
+    background-color: #000 !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("img/bckgrnds/Chicago River I.png") !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+.work_page:not(.home_page),
+.work_page:not(.home_page) h1,
+.work_page:not(.home_page) h2,
+.work_page:not(.home_page) h3,
+.work_page:not(.home_page) p,
+.work_page:not(.home_page) li,
+.work_page:not(.home_page) marquee,
+.work_page:not(.home_page) .footer,
+.work_page:not(.home_page) .footer a,
+.work_page:not(.home_page) .city_clock,
+.work_page:not(.home_page) .menu_button,
+.work_page:not(.home_page) header .personal_info p,
+.work_page:not(.home_page) header .navigation_links ul li a,
+.work_page:not(.home_page) .work_link,
+.work_page:not(.home_page) .work_link:hover{
+    color: #fff !important;
+}
+
+.work_page .desktop_h2_break{
+    display: none;
+}
+
+.home_page .homepage_personal_picture{
+    width: 124px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+}
+
+@media (min-width: 769px){
+    .work_page .desktop_h2_break{
+        display: block;
+    }
+}
+
+.about_page{
+    overflow: hidden !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    overscroll-behavior: none !important;
 }
