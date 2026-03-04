@@ -818,6 +818,18 @@ padding-top: 48px;    }
         margin: 0;
     }
 
+    .home_page .footer .city_clock{
+        position: static;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        font-size: 12px;
+        text-align: right;
+        margin: 0;
+        align-self: flex-end;
+        padding-right: 16px;
+    }
+
     .page_transition .transition_logo{
         left: 14px;
         top: 14px;
