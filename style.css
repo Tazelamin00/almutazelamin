@@ -796,6 +796,18 @@ padding-top: 48px;    }
         text-align: right;
     }
 
+    .work_page .footer .city_clock{
+        position: static;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        font-size: 12px;
+        text-align: right;
+        margin: 0;
+        align-self: flex-end;
+        padding-right: 16px;
+    }
+
     .about_page .footer .city_clock{
         position: static;
         right: auto;
