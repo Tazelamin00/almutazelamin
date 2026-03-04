@@ -806,27 +806,6 @@ padding-top: 48px;    }
         margin: 0;
     }
 
-    .about_page main{
-        padding-bottom: calc(24px + env(safe-area-inset-bottom));
-    }
-
-    .about_page main .footer{
-        position: static;
-        right: auto;
-        bottom: auto;
-    }
-
-    .about_page main .footer .homepage_image,
-    .about_page main .footer .color_block,
-    .about_page main .footer .city_clock{
-        position: static;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        transform: none;
-        margin: 0;
-    }
- 
     .page_transition .transition_logo{
         left: 14px;
         top: 14px;
