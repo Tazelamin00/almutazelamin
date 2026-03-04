@@ -734,24 +734,23 @@ padding-top: 48px;    }
     .footer,
     .work_page .footer,
     .about_page .footer{
-        position: static;
-        left: auto;
-        right: auto;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 8px;
         width: 100%;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 24px 0 16px;
+        gap: 0;
+        padding: 16px 0;
     }
 
     .footer .homepage_image{
-        position: static;
-        left: auto;
-        bottom: auto;
+        position: fixed;
+        left: 16px;
+        bottom: 16px;
         width: 64px;
-        order: -1;
     }
 
     .footer .color_block{
@@ -782,7 +781,8 @@ padding-top: 48px;    }
 
     .work_page .footer .city_clock,
     .about_page .footer .city_clock,
-    .home_page .city_clock{
+    .home_page .city_clock,
+    .home_page .footer .city_clock{
         position: fixed;
         right: 16px;
         left: auto;
@@ -794,40 +794,6 @@ padding-top: 48px;    }
         justify-self: auto;
         margin-right: 0;
         text-align: right;
-    }
-
-    .work_page .footer .city_clock{
-        position: static;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        font-size: 12px;
-        text-align: right;
-        margin: 0;
-        align-self: flex-end;
-        padding-right: 16px;
-    }
-
-    .about_page .footer .city_clock{
-        position: static;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        font-size: 12px;
-        text-align: center;
-        margin: 0;
-    }
-
-    .home_page .footer .city_clock{
-        position: static;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        font-size: 12px;
-        text-align: right;
-        margin: 0;
-        align-self: flex-end;
-        padding-right: 16px;
     }
 
     .page_transition .transition_logo{
@@ -955,32 +921,35 @@ padding-top: 48px;    }
     .about_page header .navigation_links,
     .work_page header .navigation_links{
         display: block;
-        width: auto;
+        width: 100vw;
+        height: 100dvh;
         margin: 0;
         position: fixed;
-        right: 16px;
-        top: calc(64px + env(safe-area-inset-top));
+        right: 0;
+        top: 0;
+        box-sizing: border-box;
+        padding: calc(88px + env(safe-area-inset-top)) 20px 24px;
         z-index: 6;
-        opacity: 0;
         pointer-events: none;
-        transform: translateX(24px);
-        transition: transform 0.32s ease, opacity 0.32s ease;
+        transform: translateX(100%);
+        transition: transform 0.32s ease;
+        background-image: url('img/image 18.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
     }
 
     .about_page header.nav_open .navigation_links,
     .work_page header.nav_open .navigation_links{
-        opacity: 1;
         pointer-events: auto;
         transform: translateX(0);
     }
 
     .about_page marquee,
     .about_page main,
-    .about_page .footer,
     .about_page header .logo,
     .work_page marquee,
     .work_page main,
-    .work_page .footer,
     .work_page header .logo{
         transition: transform 0.32s ease;
         will-change: transform;
@@ -988,13 +957,16 @@ padding-top: 48px;    }
 
     .about_page.menu_open marquee,
     .about_page.menu_open main,
-    .about_page.menu_open .footer,
     .about_page.menu_open header .logo,
     .work_page.menu_open marquee,
     .work_page.menu_open main,
-    .work_page.menu_open .footer,
     .work_page.menu_open header .logo{
-        transform: translateX(-120px);
+        transform: translateX(-100vw);
+    }
+
+    .about_page.menu_open,
+    .work_page.menu_open{
+        overflow: hidden;
     }
 
     .about_page header .navigation_links ul,
@@ -1002,7 +974,9 @@ padding-top: 48px;    }
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        gap: 6px;
+        justify-content: flex-start;
+        gap: 12px;
+        min-height: 100%;
     }
 
     header .navigation_links ul{
@@ -1111,6 +1085,24 @@ padding-top: 48px;    }
         width: 56px;
     }
 
+    .work_page .footer .homepage_image,
+    .about_page .footer .homepage_image{
+        position: fixed;
+        left: 16px;
+        bottom: 16px;
+    }
+
+    .work_page .footer .city_clock,
+    .about_page .footer .city_clock,
+    .home_page .city_clock,
+    .home_page .footer .city_clock{
+        position: fixed;
+        right: 16px;
+        bottom: 10px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
     .footer p:nth-of-type(1){
         font-size: 12px;
     }
@@ -1126,13 +1118,13 @@ padding-top: 48px;    }
 
 @media (min-width: 769px){
     .city_clock{
-        display: none;
+        display: block;
     }
 }
 
 @media (max-width: 480px){
     .page_transition .transition_info p:first-child{
-        right: 12px;
+        right: 16px;
         bottom: 10px;
     }
 

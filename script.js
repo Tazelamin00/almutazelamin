@@ -154,7 +154,7 @@ if (pageHeader && menuButton) {
     pageBody.classList.add('menu_open');
     menuButton.setAttribute('aria-expanded', 'true');
     menuButton.setAttribute('aria-label', 'Close navigation');
-    menuButton.textContent = 'Menu';
+    menuButton.textContent = 'X';
   };
 
   menuButton.addEventListener('click', function () {
