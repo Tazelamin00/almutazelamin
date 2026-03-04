@@ -11,7 +11,7 @@ if (navTransitionLinks.length > 0 && transitionLayer) {
 
       const targetPage = this.getAttribute('href');
       const selectedVideo = this.getAttribute('data-transition-video');
-      const selectedAudio = this.getAttribute('data-transition-audio');
+      const selectedMedia = this.getAttribute('data-transition-media') || this.getAttribute('data-transition-audio');
       let hasNavigated = false;
 
       const goToTargetPage = function () {
@@ -46,8 +46,8 @@ if (navTransitionLinks.length > 0 && transitionLayer) {
 
       stopTransitionMedia();
 
-      if (selectedAudio) {
-        transitionAudio = new Audio(selectedAudio);
+      if (selectedMedia) {
+        transitionAudio = new Audio(selectedMedia);
         transitionAudio.currentTime = 0;
         transitionAudio.muted = false;
         transitionAudio.play().catch(function () {});
@@ -62,7 +62,7 @@ if (navTransitionLinks.length > 0 && transitionLayer) {
         }
 
         transitionVideo.loop = Boolean(transitionAudio);
-        transitionVideo.muted = Boolean(selectedAudio);
+        transitionVideo.muted = Boolean(selectedMedia);
 
         const fallbackTimer = setTimeout(function () {
           finishTransition();
@@ -189,6 +189,40 @@ if (pageHeader && menuButton) {
 
 // Dedicated menu page slide-in
 const menuPageBody = document.querySelector('.menu_page.is_entering');
+const menuBackgroundVideo = document.querySelector('.menu_page .menu_background_video');
+
+if (menuBackgroundVideo) {
+  const menuBody = document.body;
+
+  menuBackgroundVideo.muted = true;
+  menuBackgroundVideo.defaultMuted = true;
+  menuBackgroundVideo.volume = 0;
+  menuBackgroundVideo.loop = true;
+  menuBackgroundVideo.playsInline = true;
+
+  menuBackgroundVideo.addEventListener('ended', function () {
+    menuBackgroundVideo.currentTime = 0;
+    menuBackgroundVideo.play().catch(function () {});
+  });
+
+  menuBackgroundVideo.addEventListener('error', function () {
+    menuBody.classList.add('menu_video_failed');
+  });
+
+  menuBackgroundVideo.addEventListener('canplay', function () {
+    menuBody.classList.remove('menu_video_failed');
+  });
+
+  const playMenuBackgroundVideo = function () {
+    menuBackgroundVideo.play().catch(function () {});
+  };
+
+  if (menuBackgroundVideo.readyState >= 2) {
+    playMenuBackgroundVideo();
+  } else {
+    menuBackgroundVideo.addEventListener('loadeddata', playMenuBackgroundVideo, { once: true });
+  }
+}
 
 if (menuPageBody) {
   requestAnimationFrame(function () {
@@ -205,8 +239,24 @@ if (menuCloseButton || menuInternalPageLinks.length > 0) {
   const menuBody = document.body;
   let isMenuExiting = false;
 
+  const getTargetPageName = function (targetUrl) {
+    try {
+      return (new URL(targetUrl, window.location.href).pathname.split('/').pop() || '').toLowerCase();
+    } catch (error) {
+      return (targetUrl || '').split('#')[0].split('?')[0].split('/').pop().toLowerCase();
+    }
+  };
+
   const navigateMenuWithExitSlide = function (targetUrl) {
     if (isMenuExiting) {
+      return;
+    }
+
+    const targetPageName = getTargetPageName(targetUrl);
+    const skipExitTransition = targetPageName === 'about.html' || targetPageName === 'work.html';
+
+    if (skipExitTransition) {
+      window.location.href = targetUrl;
       return;
     }
 

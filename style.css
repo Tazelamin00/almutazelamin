@@ -50,10 +50,31 @@ body{
 
 .menu_page{
     overflow: hidden;
+    background-color: #000;
     background-image: url("img/bckgrnds/Navy Pier.png");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+
+.menu_page .menu_background_video{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.menu_page.menu_video_failed .menu_background_video{
+    display: none;
+}
+
+.menu_page header,
+.menu_page main{
+    position: relative;
+    z-index: 1;
 }
 
 .menu_page.is_entering{
@@ -92,7 +113,7 @@ body{
 .menu_page .menu_close_button{
     position: fixed;
     top: calc(14px + env(safe-area-inset-top));
-    right: 20px;
+    right: calc(20px + env(safe-area-inset-right));
     text-decoration: none;
     color: #fff;
     font-family: 'Courier New', Courier, monospace;
@@ -106,8 +127,8 @@ body{
 
 .menu_page .menu_personal_info{
     position: fixed;
-    right: 20px;
-    bottom: 120px;
+    right: calc(20px + env(safe-area-inset-right));
+    bottom: calc(120px + env(safe-area-inset-bottom));
     text-align: right;
     color: #fff;
     font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
@@ -127,8 +148,8 @@ body{
 
 .menu_page .city_clock{
     position: fixed;
-    right: 20px;
-    bottom: 10px;
+    right: calc(20px + env(safe-area-inset-right));
+    bottom: calc(10px + env(safe-area-inset-bottom));
     left: auto;
     transform: none;
     text-align: right;
@@ -741,7 +762,14 @@ padding-top: 48px;    }
     .work_page{
         overflow-x: hidden;
         overflow-y: auto;
-        background-attachment: fixed !important;
+        -webkit-overflow-scrolling: touch;
+        background-attachment: scroll !important;
+    }
+
+    .work_page:not(.home_page){
+        will-change: auto;
+        transform: none;
+        transition: none;
     }
 
     header{
@@ -779,6 +807,36 @@ padding-top: 48px;    }
         max-width: 180px;
     }
 
+    .home_page header .logo{
+        position: fixed;
+        left: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        z-index: 5;
+    }
+
+    .home_page header .personal_info{
+        position: fixed;
+        right: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        z-index: 5;
+        text-align: right;
+    }
+
+    .work_page header .logo{
+        position: fixed;
+        left: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        z-index: 5;
+    }
+
+    .work_page header .personal_info{
+        position: fixed;
+        right: 20px;
+        top: calc(14px + env(safe-area-inset-top));
+        z-index: 5;
+        text-align: right;
+    }
+
     header .personal_info p{
         padding-bottom: 0.6em;
         line-height: 1.35;
@@ -790,7 +848,6 @@ padding-top: 48px;    }
         min-height: auto;
     }
 
-    .work_page header .personal_info,
     .about_page header .personal_info{
         position: static;
         right: auto;
@@ -987,10 +1044,10 @@ padding-top: 48px;    }
     .about_page .footer .city_clock,
     .home_page .city_clock{
         position: fixed;
-        right: 16px;
+        right: calc(16px + env(safe-area-inset-right));
         left: auto;
         transform: none;
-        bottom: 10px;
+        bottom: calc(10px + env(safe-area-inset-bottom));
         z-index: 4;
         font-size: 11px;
         grid-column: auto;
@@ -999,26 +1056,98 @@ padding-top: 48px;    }
         text-align: right;
     }
 
+    .work_page .page_home_button,
+    .about_page .page_home_button{
+        position: fixed;
+        left: calc(16px + env(safe-area-inset-left));
+        bottom: calc(16px + env(safe-area-inset-bottom));
+        z-index: 12;
+    }
+
+    .work_page .city_clock{
+        position: fixed;
+        right: calc(16px + env(safe-area-inset-right));
+        left: auto;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        transform: none;
+        z-index: 12;
+        text-align: right;
+        white-space: nowrap;
+    }
+
     .page_transition .transition_logo{
-        left: 14px;
-        top: 14px;
+        left: calc(14px + env(safe-area-inset-left));
+        top: calc(14px + env(safe-area-inset-top));
         width: 68px;
     }
 
     .page_transition .transition_info{
-        right: 14px;
-        top: 14px;
+        right: calc(14px + env(safe-area-inset-right));
+        top: calc(14px + env(safe-area-inset-top));
         font-size: 11px;
     }
 }
 
 @media (max-width: 768px){
-    .page_transition .transition_info p:first-child{
-        position: fixed;
-        right: 16px;
+    .work_page:not(.home_page){
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .work_page:not(.home_page) main{
+        min-height: auto;
+        justify-content: flex-start;
+        padding: 14px 14px calc(170px + env(safe-area-inset-bottom));
+    }
+
+    .work_page:not(.home_page) .work_center_context{
+        position: relative;
+        top: auto;
         left: auto;
         transform: none;
-        bottom: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding-top: 0;
+    }
+
+    .work_page:not(.home_page) .personal_picture{
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .work_page:not(.home_page) .name_description{
+        margin-top: 0;
+    }
+
+    .work_page:not(.home_page) .name_description .skills_list{
+        margin-top: 8px;
+    }
+
+    .work_page:not(.home_page) .work_additional_info{
+        margin-top: 24px;
+    }
+
+    .work_page:not(.home_page) .footer{
+        position: static;
+        margin-top: 28px;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        z-index: 3;
+    }
+
+    .page_transition .transition_info p:first-child{
+        position: fixed;
+        right: calc(16px + env(safe-area-inset-right));
+        left: auto;
+        transform: none;
+        bottom: calc(10px + env(safe-area-inset-bottom));
         z-index: 4;
         font-size: 11px;
         text-align: right;
@@ -1045,7 +1174,7 @@ padding-top: 48px;    }
         align-items: center;
         justify-content: center;
         position: fixed;
-        right: 20px;
+        right: calc(20px + env(safe-area-inset-right));
         top: calc(14px + env(safe-area-inset-top));
         z-index: 7;
         width: auto;
@@ -1083,7 +1212,7 @@ padding-top: 48px;    }
 
     .about_page header .logo{
         position: fixed;
-        left: 20px;
+        left: calc(20px + env(safe-area-inset-left));
         top: calc(14px + env(safe-area-inset-top));
         width: 68px;
         height: auto;
@@ -1092,7 +1221,7 @@ padding-top: 48px;    }
 
     .work_page header .logo{
         position: fixed;
-        left: 20px;
+        left: calc(20px + env(safe-area-inset-left));
         top: calc(14px + env(safe-area-inset-top));
         width: 68px;
         height: auto;
@@ -1127,7 +1256,7 @@ padding-top: 48px;    }
         width: auto;
         margin: 0;
         position: fixed;
-        right: 16px;
+        right: calc(16px + env(safe-area-inset-right));
         top: calc(64px + env(safe-area-inset-top));
         z-index: 6;
     }
@@ -1315,8 +1444,8 @@ padding-top: 48px;    }
 
 @media (max-width: 480px){
     .page_transition .transition_info p:first-child{
-        right: 12px;
-        bottom: 10px;
+        right: calc(12px + env(safe-area-inset-right));
+        bottom: calc(10px + env(safe-area-inset-bottom));
     }
 
     header .logo{
@@ -1350,19 +1479,19 @@ padding-top: 48px;    }
 
     .about_page .menu_button,
     .work_page .menu_button{
-        right: 16px;
+        right: calc(16px + env(safe-area-inset-right));
         top: calc(12px + env(safe-area-inset-top));
         font-size: 13px;
     }
 
     .about_page header .logo{
-        left: 16px;
+        left: calc(16px + env(safe-area-inset-left));
         top: calc(12px + env(safe-area-inset-top));
         width: 68px;
     }
 
     .work_page header .logo{
-        left: 16px;
+        left: calc(16px + env(safe-area-inset-left));
         top: calc(12px + env(safe-area-inset-top));
         width: 68px;
     }
@@ -1377,7 +1506,7 @@ padding-top: 48px;    }
 
     .about_page header .navigation_links,
     .work_page header .navigation_links{
-        right: 12px;
+        right: calc(12px + env(safe-area-inset-right));
         top: calc(58px + env(safe-area-inset-top));
     }
 }
@@ -1417,7 +1546,7 @@ padding-top: 48px;    }
 
     .home_page header .logo{
         position: fixed;
-        left: 20px;
+        left: calc(20px + env(safe-area-inset-left));
         top: calc(14px + env(safe-area-inset-top));
         width: 68px;
         height: auto;
@@ -1433,7 +1562,7 @@ padding-top: 48px;    }
         align-items: center;
         justify-content: center;
         position: fixed;
-        right: 20px;
+        right: calc(20px + env(safe-area-inset-right));
         top: calc(14px + env(safe-area-inset-top));
         font-size: 42px;
         z-index: 5;
@@ -1542,12 +1671,12 @@ padding-top: 48px;    }
 
     .home_page .mail_icon{
         font-size: 40px;
-        right: 16px;
+        right: calc(16px + env(safe-area-inset-right));
         top: calc(12px + env(safe-area-inset-top));
     }
 
     .home_page header .logo{
-        left: 16px;
+        left: calc(16px + env(safe-area-inset-left));
         top: calc(12px + env(safe-area-inset-top));
         width: 68px;
     }
@@ -1560,6 +1689,8 @@ padding-top: 48px;    }
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .work_page:not(.home_page),
@@ -1606,5 +1737,17 @@ padding-top: 48px;    }
 
 .navigation_links ul li a.current_page_link,
 .menu_page .menu_page_navigation a.current_page_link{
-    color: #D99F16 !important;
+    color: #FB7D21 !important;
+}
+
+@media (min-width: 769px){
+    .navigation_links ul li a.current_page_link{
+        color: inherit !important;
+        text-decoration: underline;
+        font-weight: 400;
+    }
+
+    .navigation_links ul li a.current_page_link b{
+        font-weight: 400;
+    }
 }
