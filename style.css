@@ -44,12 +44,8 @@ body{
 .about_page,
 .work_page,
 .menu_page{
-    transition: transform 0.35s ease;
-}
-
-.about_page.menu_navigating,
-.work_page.menu_navigating{
-    transform: translateX(-100vw);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
 }
 
 .menu_page{
@@ -64,12 +60,16 @@ body{
     transform: translateX(100vw);
 }
 
+.menu_page.is_exiting{
+    transform: translateX(100vw);
+}
+
 .menu_page main{
     min-height: calc(100vh - 40px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
-    padding: 24px;
+    padding: 34px 24px 24px;
 }
 
 .menu_page .menu_page_navigation{
@@ -100,6 +100,42 @@ body{
     font-weight: 300;
     opacity: 0.7;
     line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    z-index: 10;
+}
+
+.menu_page .menu_personal_info{
+    position: fixed;
+    right: 20px;
+    bottom: 120px;
+    text-align: right;
+    color: #fff;
+    font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.35;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    z-index: 10;
+}
+
+.menu_page .menu_personal_info p{
+    margin-bottom: 1.1em;
+}
+
+.menu_page .menu_personal_info p:last-child{
+    margin-bottom: 0;
+}
+
+.menu_page .city_clock{
+    position: fixed;
+    right: 20px;
+    bottom: 10px;
+    left: auto;
+    transform: none;
+    text-align: right;
+    white-space: nowrap;
+    color: #fff;
+    font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
+    font-size: 12px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
     z-index: 10;
 }
@@ -1268,19 +1304,12 @@ padding-top: 48px;    }
 
     .work_page .footer .city_clock,
     .about_page .footer .city_clock{
-        display: block;
-        position: fixed;
-        right: 20px;
-        bottom: 10px;
-        left: auto;
-        transform: none;
-        text-align: right;
-        white-space: nowrap;
+        display: none;
     }
 
     .work_page .header_clock,
     .about_page .header_clock{
-        display: none;
+        display: inline;
     }
 }
 
@@ -1556,7 +1585,7 @@ padding-top: 48px;    }
 }
 
 .home_page .homepage_personal_picture{
-    width: 124px;
+    width: 180px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     display: block;
@@ -1573,4 +1602,9 @@ padding-top: 48px;    }
     height: 100vh !important;
     min-height: 100vh !important;
     overscroll-behavior: none !important;
+}
+
+.navigation_links ul li a.current_page_link,
+.menu_page .menu_page_navigation a.current_page_link{
+    color: #D99F16 !important;
 }
