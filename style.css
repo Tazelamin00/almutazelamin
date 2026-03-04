@@ -41,6 +41,47 @@ body{
     font-family: 'Neue Montreal-Regular', Arial, Helvetica, sans-serif;
 }
 
+.about_page,
+.work_page,
+.menu_page{
+    transition: transform 0.35s ease;
+}
+
+.about_page.menu_navigating,
+.work_page.menu_navigating{
+    transform: translateX(-100vw);
+}
+
+.menu_page{
+    overflow: hidden;
+}
+
+.menu_page.is_entering{
+    transform: translateX(100vw);
+}
+
+.menu_page main{
+    min-height: calc(100vh - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 24px;
+}
+
+.menu_page .menu_page_navigation{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+}
+
+.menu_page .menu_page_navigation a{
+    text-decoration: none;
+    color: #000;
+    font-family: 'Neue Montreal-Bold', Arial, Helvetica, sans-serif;
+    font-size: 32px;
+}
+
 /* Keeps about page background exactly the same as index */
 .about_page{
     background-image: url(img/background.jpg) !important;

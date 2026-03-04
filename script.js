@@ -134,52 +134,38 @@ if (homeAndAboutMarquees.length > 0) {
   window.addEventListener('resize', updateHomeAndAboutMarqueeSpeed);
 }
 
-// About + Work mobile menu toggle
+// About + Work menu button opens dedicated navigation page
 const pageHeader = document.querySelector('.about_page header, .work_page header');
 const menuButton = document.querySelector('.about_page .menu_button, .work_page .menu_button');
 
 if (pageHeader && menuButton) {
-  const closeMenu = function () {
-    pageHeader.classList.remove('nav_open');
-    menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.setAttribute('aria-label', 'Open navigation');
-    menuButton.textContent = 'Menu';
-  };
-
-  const openMenu = function () {
-    pageHeader.classList.add('nav_open');
-    menuButton.setAttribute('aria-expanded', 'true');
-    menuButton.setAttribute('aria-label', 'Close navigation');
-    menuButton.textContent = 'Menu';
-  };
+  const pageBody = document.body;
+  let isNavigatingToMenu = false;
 
   menuButton.addEventListener('click', function () {
-    if (pageHeader.classList.contains('nav_open')) {
-      closeMenu();
+    if (isNavigatingToMenu) {
       return;
     }
 
-    openMenu();
+    isNavigatingToMenu = true;
+    menuButton.setAttribute('aria-expanded', 'true');
+    menuButton.setAttribute('aria-label', 'Opening navigation');
+    pageBody.classList.add('menu_navigating');
+
+    setTimeout(function () {
+      window.location.href = 'menu.html';
+    }, 350);
   });
+}
 
-  pageHeader.querySelectorAll('.navigation_links a').forEach(function (navigationLink) {
-    navigationLink.addEventListener('click', closeMenu);
-  });
+// Dedicated menu page slide-in
+const menuPageBody = document.querySelector('.menu_page.is_entering');
 
-  document.addEventListener('click', function (event) {
-    if (!pageHeader.classList.contains('nav_open')) {
-      return;
-    }
-
-    if (!pageHeader.contains(event.target)) {
-      closeMenu();
-    }
-  });
-
-  window.addEventListener('resize', function () {
-    if (window.innerWidth > 768) {
-      closeMenu();
-    }
+if (menuPageBody) {
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      menuPageBody.classList.remove('is_entering');
+    });
   });
 }
 
