@@ -120,16 +120,18 @@ if (workMarquee) {
   window.addEventListener('resize', updateWorkMarqueeSpeed);
 }
 
-// Home page marquee speed (slower on mobile)
-const homeMarquee = document.querySelector('.home_page marquee');
+// Home + About page marquee speed (slower on mobile)
+const homeAndAboutMarquees = document.querySelectorAll('.home_page marquee, .about_page marquee');
 
-if (homeMarquee) {
-  const updateHomeMarqueeSpeed = function () {
-    homeMarquee.scrollAmount = window.innerWidth <= 768 ? 2.75 : 3;
+if (homeAndAboutMarquees.length > 0) {
+  const updateHomeAndAboutMarqueeSpeed = function () {
+    homeAndAboutMarquees.forEach(function (marqueeElement) {
+      marqueeElement.scrollAmount = window.innerWidth <= 768 ? 2.75 : 3;
+    });
   };
 
-  updateHomeMarqueeSpeed();
-  window.addEventListener('resize', updateHomeMarqueeSpeed);
+  updateHomeAndAboutMarqueeSpeed();
+  window.addEventListener('resize', updateHomeAndAboutMarqueeSpeed);
 }
 
 // About + Work mobile menu toggle

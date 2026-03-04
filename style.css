@@ -548,10 +548,11 @@ padding-top: 48px;    }
     }
 
     .about_page{
-        overflow: hidden;
-        height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: auto;
         min-height: 100dvh;
-        overscroll-behavior: none;
+        overscroll-behavior: auto;
     }
 
     header{
@@ -795,6 +796,16 @@ padding-top: 48px;    }
         text-align: right;
     }
 
+    .about_page .footer .city_clock{
+        position: static;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        font-size: 12px;
+        text-align: center;
+        margin: 0;
+    }
+
     .page_transition .transition_logo{
         left: 14px;
         top: 14px;
@@ -909,12 +920,12 @@ padding-top: 48px;    }
 
     .about_page marquee{
         display: block;
-        margin-top: calc(106px + env(safe-area-inset-top));
+        margin-top: calc(72px + env(safe-area-inset-top));
     }
 
     .work_page marquee{
         display: block;
-        margin-top: calc(106px + env(safe-area-inset-top));
+        margin-top: calc(72px + env(safe-area-inset-top));
     }
 
     .about_page header .navigation_links,
@@ -957,7 +968,7 @@ padding-top: 48px;    }
     }
 
     main{
-        padding: 16px 14px 130px;
+        padding: 14px 14px 130px;
     }
 
     .name_occupation h2{
@@ -1036,7 +1047,7 @@ padding-top: 48px;    }
         font-size: 16px;
         line-height: 1.4;
         position: relative;
-        top: 14px;
+        top: 0px;
     }
 
     .about_description .information{
@@ -1284,7 +1295,7 @@ padding-top: 48px;    }
     }
 
     .home_page marquee{
-        margin-top: calc(100px + env(safe-area-inset-top));
+        margin-top: calc(68px + env(safe-area-inset-top));
     }
 
     .home_page .work_link{
