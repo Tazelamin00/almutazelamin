@@ -1070,7 +1070,8 @@ padding-top: 48px;    }
         position: fixed;
         right: calc(16px + env(safe-area-inset-right));
         left: auto;
-        bottom: calc(10px + env(safe-area-inset-bottom));
+        bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+        bottom: calc(10px + constant(safe-area-inset-bottom));
         transform: none;
         z-index: 4;
         font-size: 11px;
@@ -1688,24 +1689,13 @@ padding-top: 48px;    }
 
 .work_page:not(.home_page){
     background-color: #000 !important;
-    background-image: none !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("img/bckgrnds/Chicago River I.png") !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
     overflow-x: hidden;
     overflow-y: auto;
-    position: relative;
-    isolation: isolate;
-}
-
-.work_page:not(.home_page)::before{
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-color: #000;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("img/bckgrnds/Chicago River I.png");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: -1;
 }
 
 .work_page:not(.home_page),
