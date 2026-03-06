@@ -763,7 +763,7 @@ padding-top: 48px;    }
         overflow-x: hidden;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        background-attachment: scroll !important;
+        background-attachment: fixed !important;
     }
 
     .work_page:not(.home_page){
@@ -1064,7 +1064,8 @@ padding-top: 48px;    }
         z-index: 12;
     }
 
-    .work_page .city_clock{
+    .work_page .city_clock,
+    .about_page .city_clock{
         position: fixed;
         right: calc(16px + env(safe-area-inset-right));
         left: auto;
@@ -1689,6 +1690,7 @@ padding-top: 48px;    }
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -1715,6 +1717,39 @@ padding-top: 48px;    }
     display: none;
 }
 
+@media (max-width: 768px){
+    .about_page{
+        overflow: hidden;
+        height: 100dvh;
+        min-height: 100dvh;
+        background-attachment: fixed !important;
+    }
+
+    .about_page main{
+        min-height: 0;
+        padding: 14px 14px 0;
+        overflow: hidden;
+    }
+
+    .about_page .about_description{
+        margin-top: 0;
+        padding: 0.5em 1em 0;
+        max-height: calc(100dvh - 190px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+    }
+
+    .about_page .footer{
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: calc(38px + env(safe-area-inset-bottom));
+        padding: 0;
+        z-index: 3;
+    }
+}
+
 .home_page .homepage_personal_picture{
     width: 180px;
     aspect-ratio: 1 / 1;
@@ -1728,11 +1763,13 @@ padding-top: 48px;    }
     }
 }
 
-.about_page{
-    overflow: hidden !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    overscroll-behavior: none !important;
+@media (min-width: 769px){
+    .about_page{
+        overflow: hidden !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        overscroll-behavior: none !important;
+    }
 }
 
 .navigation_links ul li a.current_page_link,
