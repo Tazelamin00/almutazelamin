@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('almutaz_loader_seen') === '1') {
+                    document.documentElement.classList.add('skip_loader');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
     <title>Almutaz Elamin</title>
 </head>
 <body class="work_page home_page">
+
+    <!-- ─── Site Loader ─── -->
+    <div id="site_loader" aria-label="Loading site" aria-live="polite">
+        <span class="loader_status_label">Loading...<span id="loader_pct_label">00</span>%</span>
+        <div class="loader_frame">
+            <div class="loader_frame_overlay"></div>
+            <div class="loader_frame_inner">
+                <img src="img/logos/Professional Logo.png" alt="Almutaz Elamin logo" class="logo">
+                <span class="loader_bottom_text">hello@almutazelamin.com</span>
+            </div>
+        </div>
+    </div>
+
     <header>
         <img src="img/logos/Professional Logo.png" alt="Personal Logo" class="logo">
         <a href="mailto:hello@almutazelamin.com" class="mail_icon" aria-label="Send email"><img src="img/icons/envelope.png" alt="" aria-hidden="true"></a>

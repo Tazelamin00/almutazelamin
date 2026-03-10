@@ -1,3 +1,64 @@
+// ─── Site Loader ──────────────────────────────────────────────
+(function () {
+    var loader    = document.getElementById('site_loader');
+    if (!loader) return;
+
+  var LOADER_SEEN_KEY = 'almutaz_loader_seen';
+  var hasSeenLoader = false;
+
+  try {
+    hasSeenLoader = localStorage.getItem(LOADER_SEEN_KEY) === '1';
+  } catch (e) {}
+
+  if (hasSeenLoader) {
+    loader.remove();
+    return;
+  }
+
+  try {
+    localStorage.setItem(LOADER_SEEN_KEY, '1');
+  } catch (e) {}
+
+    var pctLabel = document.getElementById('loader_pct_label');
+
+    var current = 0;
+
+    function tick() {
+        if (current >= 100) {
+            pctLabel.textContent = '100';
+            setTimeout(function () {
+                loader.classList.add('is_done');
+                loader.addEventListener('transitionend', function () {
+                    loader.remove();
+                }, { once: true });
+            }, 350);
+            return;
+        }
+
+        var inc;
+        if      (current < 15) { inc = Math.random() * 2.8 + 1.0; }
+        else if (current < 65) { inc = Math.random() * 1.2 + 0.3; }
+        else if (current < 88) { inc = Math.random() * 2.0 + 0.7; }
+        else                   { inc = Math.random() * 3.0 + 1.2; }
+
+        current = Math.min(current + inc, 100);
+        var display = String(Math.floor(current)).padStart(2, '0');
+
+        pctLabel.textContent = display;
+
+        var delay;
+        if      (current < 15) { delay = 55;  }
+        else if (current < 65) { delay = 115; }
+        else if (current < 88) { delay = 55;  }
+        else                   { delay = 38;  }
+
+        setTimeout(tick, delay);
+    }
+
+    setTimeout(tick, 180);
+})();
+// ──────────────────────────────────────────────────────────────
+
 // Shared navigation transition (index page)
 const navTransitionLinks = document.querySelectorAll('.nav_transition_link');
 const transitionLayer = document.getElementById('pageTransition');
