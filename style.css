@@ -1805,14 +1805,24 @@ main {
 }
 
 .work_page:not(.home_page) {
-    background-color: #000 !important;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("img/bckgrnds/Chicago River I.png") !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-attachment: fixed !important;
+    position: relative;
+    isolation: isolate;
+    background: transparent !important;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.work_page:not(.home_page)::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: #000;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("img/bckgrnds/Chicago River I.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .work_page:not(.home_page),
