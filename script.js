@@ -176,7 +176,7 @@ if (navTransitionLinks.length > 0 && transitionLayer) {
   });
 }
 
-// Work page slideshow (cycles every 2 seconds using all images in img/components)
+// Work page slideshow (cycles every 2 seconds using the original component images)
 const workSlideshowImage = document.querySelector('.work_page .work_center_context .personal_picture');
 
 if (workSlideshowImage) {
@@ -423,4 +423,123 @@ if (cityClockElements.length > 0 || chicagoTimestampElements.length > 0 || heade
 
   updateCityClock();
   setInterval(updateCityClock, 1000);
+
+// ── Work page: scroll progress indicator ─────────────────────
+const workScrollPanel = document.querySelector('.work_page .work_center_context');
+const workScrollProgressBar = document.querySelector('.work_scroll_progress');
+
+if (workScrollPanel && workScrollProgressBar) {
+  const updateWorkScrollProgress = function () {
+    const scrollTop = workScrollPanel.scrollTop;
+    const scrollHeight = workScrollPanel.scrollHeight - workScrollPanel.clientHeight;
+    const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    workScrollProgressBar.style.height = pct + '%';
+  };
+
+  workScrollPanel.addEventListener('scroll', updateWorkScrollProgress, { passive: true });
+  updateWorkScrollProgress();
+}
+
+// ── Work page: project card dot carousel ─────────────────────
+const workProjectCards = document.querySelectorAll('.work_page .work_project_card');
+
+workProjectCards.forEach(function (card) {
+  const img = card.querySelector('.work_project_img');
+  const title = card.querySelector('.work_project_title');
+  const year = card.querySelector('.work_project_year');
+  const desc = card.querySelector('.work_project_desc');
+  const dots = card.querySelectorAll('.work_project_dot');
+
+  if (!img || !dots.length) return;
+
+  const dotsArray = Array.from(dots);
+  const autoRotateIntervalMs = 6000;
+  const dissolveStepMs = 170;
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let autoRotateTimer = null;
+  let dissolveTimer = null;
+
+  const applyDotContent = function (dot) {
+    const src = dot.getAttribute('data-img');
+    const dotTitle = dot.getAttribute('data-title');
+    const dotYear = dot.getAttribute('data-year');
+    const dotDesc = dot.getAttribute('data-desc');
+
+    if (src) img.src = src;
+    if (title && dotTitle) title.textContent = dotTitle;
+    if (year && dotYear) year.textContent = dotYear;
+    if (desc && dotDesc) desc.textContent = dotDesc;
+  };
+
+  const applyActiveDotState = function (targetDot) {
+    dotsArray.forEach(function (d) {
+      d.classList.remove('is_active');
+      d.setAttribute('aria-selected', 'false');
+    });
+
+    targetDot.classList.add('is_active');
+    targetDot.setAttribute('aria-selected', 'true');
+    applyDotContent(targetDot);
+  };
+
+  const activateDot = function (targetDot, instant) {
+    if (!targetDot) return;
+
+    if (dissolveTimer) {
+      clearTimeout(dissolveTimer);
+      dissolveTimer = null;
+    }
+
+    if (instant || prefersReducedMotion) {
+      card.classList.remove('is_dissolving');
+      applyActiveDotState(targetDot);
+      return;
+    }
+
+    card.classList.add('is_dissolving');
+    dissolveTimer = setTimeout(function () {
+      applyActiveDotState(targetDot);
+      card.classList.remove('is_dissolving');
+      dissolveTimer = null;
+    }, dissolveStepMs);
+  };
+
+  const activateDotByIndex = function (index) {
+    if (!dotsArray.length) return;
+
+    const wrappedIndex = (index + dotsArray.length) % dotsArray.length;
+    activateDot(dotsArray[wrappedIndex]);
+  };
+
+  const getActiveIndex = function () {
+    const activeIndex = dotsArray.findIndex(function (dot) {
+      return dot.classList.contains('is_active');
+    });
+
+    return activeIndex === -1 ? 0 : activeIndex;
+  };
+
+  const startAutoRotate = function () {
+    if (autoRotateTimer) {
+      clearInterval(autoRotateTimer);
+    }
+
+    autoRotateTimer = setInterval(function () {
+      activateDotByIndex(getActiveIndex() + 1);
+    }, autoRotateIntervalMs);
+  };
+
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      activateDot(dot);
+      startAutoRotate();
+    });
+  });
+
+  const initiallyActiveDot = card.querySelector('.work_project_dot.is_active') || dots[0];
+  if (initiallyActiveDot) {
+    activateDot(initiallyActiveDot, true);
+    startAutoRotate();
+  }
+});
 }
