@@ -453,11 +453,45 @@ workProjectCards.forEach(function (card) {
   if (!img || !dots.length) return;
 
   const dotsArray = Array.from(dots);
-  const autoRotateIntervalMs = 6000;
+  const autoRotateIntervalMs = 8000;
   const dissolveStepMs = 170;
   const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let autoRotateTimer = null;
   let dissolveTimer = null;
+  let transitionRequestId = 0;
+
+  const preloadImage = function (src) {
+    return new Promise(function (resolve) {
+      if (!src || img.getAttribute('src') === src) {
+        resolve();
+        return;
+      }
+
+      const preloader = new Image();
+      let hasSettled = false;
+
+      const settle = function () {
+        if (hasSettled) {
+          return;
+        }
+
+        hasSettled = true;
+        resolve();
+      };
+
+      preloader.addEventListener('load', settle, { once: true });
+      preloader.addEventListener('error', settle, { once: true });
+      preloader.src = src;
+
+      if (preloader.complete) {
+        settle();
+        return;
+      }
+
+      // Avoid getting stuck in dissolve if a resource stalls.
+      setTimeout(settle, 1400);
+    });
+  };
 
   const applyDotContent = function (dot) {
     const src = dot.getAttribute('data-img');
@@ -485,6 +519,8 @@ workProjectCards.forEach(function (card) {
   const activateDot = function (targetDot, instant) {
     if (!targetDot) return;
 
+    const requestId = ++transitionRequestId;
+
     if (dissolveTimer) {
       clearTimeout(dissolveTimer);
       dissolveTimer = null;
@@ -497,10 +533,20 @@ workProjectCards.forEach(function (card) {
     }
 
     card.classList.add('is_dissolving');
+    const targetSrc = targetDot.getAttribute('data-img');
+    const preloadPromise = preloadImage(targetSrc);
+
     dissolveTimer = setTimeout(function () {
-      applyActiveDotState(targetDot);
-      card.classList.remove('is_dissolving');
       dissolveTimer = null;
+
+      preloadPromise.then(function () {
+        if (requestId !== transitionRequestId) {
+          return;
+        }
+
+        applyActiveDotState(targetDot);
+        card.classList.remove('is_dissolving');
+      });
     }, dissolveStepMs);
   };
 
@@ -543,3 +589,327 @@ workProjectCards.forEach(function (card) {
   }
 });
 }
+
+// GSAP text + scroll enhancements
+(function () {
+  if (window.__almutazGsapBooted) {
+    return;
+  }
+
+  window.__almutazGsapBooted = true;
+
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  const GSAP_CDN_URL = 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js';
+  const SCROLL_TRIGGER_CDN_URL = 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js';
+
+  const loadScript = function (url) {
+    return new Promise(function (resolve, reject) {
+      const existingScript = Array.from(document.querySelectorAll('script')).find(function (scriptElement) {
+        return scriptElement.src === url;
+      });
+
+      if (existingScript) {
+        const isReady =
+          (url === GSAP_CDN_URL && Boolean(window.gsap)) ||
+          (url === SCROLL_TRIGGER_CDN_URL && Boolean(window.ScrollTrigger));
+
+        if (isReady) {
+          resolve();
+          return;
+        }
+
+        existingScript.addEventListener('load', function () {
+          resolve();
+        }, { once: true });
+
+        existingScript.addEventListener('error', function () {
+          reject(new Error('Failed to load script: ' + url));
+        }, { once: true });
+
+        return;
+      }
+
+      const scriptTag = document.createElement('script');
+      scriptTag.src = url;
+      scriptTag.async = true;
+      scriptTag.crossOrigin = 'anonymous';
+
+      scriptTag.addEventListener('load', function () {
+        resolve();
+      }, { once: true });
+
+      scriptTag.addEventListener('error', function () {
+        reject(new Error('Failed to load script: ' + url));
+      }, { once: true });
+
+      document.head.appendChild(scriptTag);
+    });
+  };
+
+  const ensureGsap = function () {
+    if (window.gsap && window.ScrollTrigger) {
+      return Promise.resolve();
+    }
+
+    const gsapPromise = window.gsap ? Promise.resolve() : loadScript(GSAP_CDN_URL);
+
+    return gsapPromise.then(function () {
+      return window.ScrollTrigger ? Promise.resolve() : loadScript(SCROLL_TRIGGER_CDN_URL);
+    });
+  };
+
+  const runAfterLoader = function (callback) {
+    const loaderElement = document.getElementById('site_loader');
+
+    if (!loaderElement || document.documentElement.classList.contains('skip_loader')) {
+      requestAnimationFrame(callback);
+      return;
+    }
+
+    let hasStarted = false;
+
+    const startOnce = function () {
+      if (hasStarted) {
+        return;
+      }
+
+      hasStarted = true;
+      requestAnimationFrame(callback);
+    };
+
+    loaderElement.addEventListener('transitionend', startOnce, { once: true });
+    setTimeout(startOnce, 2300);
+  };
+
+  const initGsapEnhancements = function () {
+    if (!window.gsap || !window.ScrollTrigger) {
+      return;
+    }
+
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+    const fadeUpEase = 'power3.out';
+
+    const homeIntroTargets = document.querySelectorAll('.home_page .name_occupation h2, .home_page .name_occupation p, .home_page .work_image_navigation .work_link, .home_page .work_bottom_link .work_link');
+    const homeHeroImage = document.querySelector('.home_page .homepage_personal_picture');
+    const homeMarquee = document.querySelector('.home_page marquee');
+
+    if (homeIntroTargets.length > 0) {
+      gsap.from(homeIntroTargets, {
+        opacity: 0,
+        y: 26,
+        duration: 0.92,
+        stagger: 0.09,
+        ease: fadeUpEase,
+        clearProps: 'transform,opacity',
+      });
+    }
+
+    if (homeHeroImage) {
+      gsap.from(homeHeroImage, {
+        opacity: 0,
+        scale: 0.9,
+        rotation: -2,
+        duration: 1.08,
+        ease: 'power2.out',
+        clearProps: 'transform,opacity',
+      });
+    }
+
+    if (homeMarquee) {
+      gsap.from(homeMarquee, {
+        opacity: 0,
+        y: -10,
+        duration: 0.7,
+        delay: 0.12,
+        ease: 'power2.out',
+        clearProps: 'transform,opacity',
+      });
+    }
+
+    const aboutHeading = document.querySelector('.about_page .about_description h2');
+    const aboutImage = document.querySelector('.about_page .about_description .personal_picture');
+    const aboutParagraph = document.querySelector('.about_page .about_description .information');
+    const aboutScroller = isSmallScreen ? document.querySelector('.about_page .about_description') : null;
+
+    if (aboutHeading) {
+      gsap.from(aboutHeading, {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: fadeUpEase,
+        clearProps: 'transform,opacity',
+      });
+    }
+
+    if (aboutImage) {
+      gsap.from(aboutImage, {
+        opacity: 0,
+        scale: 0.94,
+        duration: 1,
+        delay: 0.1,
+        ease: fadeUpEase,
+        clearProps: 'transform,opacity',
+      });
+    }
+
+    if (aboutParagraph) {
+      gsap.from(aboutParagraph, {
+        opacity: 0,
+        y: 24,
+        duration: 0.92,
+        delay: 0.18,
+        ease: fadeUpEase,
+        clearProps: 'transform,opacity',
+      });
+
+      gsap.fromTo(aboutParagraph,
+        {
+          opacity: 0.45,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: aboutParagraph,
+            start: 'top 85%',
+            end: 'top 35%',
+            scrub: true,
+            scroller: aboutScroller || undefined,
+          },
+        }
+      );
+    }
+
+    const workScroller = document.querySelector('.work_page .work_center_context');
+    const workHeading = document.querySelector('.work_page .name_description h2');
+    const workSkillItems = document.querySelectorAll('.work_page .skills_list li');
+    const workInfoGroups = document.querySelectorAll('.work_page .work_info_group');
+    const workCards = document.querySelectorAll('.work_page .work_project_card');
+    const workCenterImage = document.querySelector('.work_page .personal_picture');
+
+    if (workHeading) {
+      gsap.from(workHeading, {
+        opacity: 0,
+        y: 34,
+        duration: 1,
+        ease: fadeUpEase,
+        scrollTrigger: {
+          trigger: workHeading,
+          start: 'top 88%',
+          scroller: workScroller || undefined,
+        },
+      });
+    }
+
+    if (workSkillItems.length > 0) {
+      gsap.from(workSkillItems, {
+        opacity: 0,
+        x: 24,
+        duration: 0.66,
+        stagger: 0.045,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: workSkillItems[0],
+          start: 'top 90%',
+          scroller: workScroller || undefined,
+        },
+      });
+    }
+
+    if (workInfoGroups.length > 0) {
+      gsap.from(workInfoGroups, {
+        opacity: 0,
+        y: 22,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: fadeUpEase,
+        scrollTrigger: {
+          trigger: workInfoGroups[0],
+          start: 'top 92%',
+          scroller: workScroller || undefined,
+        },
+      });
+    }
+
+    workCards.forEach(function (workCard) {
+      gsap.from(workCard, {
+        opacity: 0,
+        y: 72,
+        duration: 0.95,
+        ease: fadeUpEase,
+        scrollTrigger: {
+          trigger: workCard,
+          start: 'top 88%',
+          scroller: workScroller || undefined,
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+
+    if (workCenterImage && workScroller) {
+      gsap.to(workCenterImage, {
+        yPercent: -11,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: workScroller,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.8,
+          scroller: workScroller,
+        },
+      });
+    }
+
+    const menuLinks = document.querySelectorAll('.menu_page .menu_page_navigation a');
+    const menuMeta = document.querySelectorAll('.menu_page .menu_close_button, .menu_page .menu_personal_info p, .menu_page .city_clock');
+
+    if (menuLinks.length > 0) {
+      gsap.from(menuLinks, {
+        opacity: 0,
+        x: -30,
+        duration: 0.82,
+        stagger: 0.1,
+        ease: fadeUpEase,
+      });
+    }
+
+    if (menuMeta.length > 0) {
+      gsap.from(menuMeta, {
+        opacity: 0,
+        y: 16,
+        duration: 0.72,
+        stagger: 0.06,
+        delay: 0.16,
+        ease: 'power2.out',
+      });
+    }
+
+    let refreshTimer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 180);
+    });
+  };
+
+  ensureGsap()
+    .then(function () {
+      runAfterLoader(initGsapEnhancements);
+    })
+    .catch(function () {
+      // Keep site fully functional if GSAP cannot load.
+    });
+})();

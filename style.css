@@ -474,15 +474,23 @@ main {
             color: #000;
         }
 
-        .personal_picture {
-            display: block;
+        .personal_picture_frame {
             width: 180px;
             height: 180px;
-            object-fit: cover;
-            object-position: 35% center;
+            overflow: hidden;
             position: relative;
             top: 28px;
             margin-bottom: 84px;
+        }
+
+        .personal_picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 35% center;
+            transform: scale(1.22);
+            transform-origin: center center;
         }
 
         p {
@@ -1031,14 +1039,20 @@ main {
         margin-top: 24px;
     }
 
-    .about_description .personal_picture {
+    .about_description .personal_picture_frame {
         position: static;
         top: auto;
         margin: 10px 0 16px;
         width: 160px;
         height: 160px;
+    }
+
+    .about_description .personal_picture {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: 35% center;
+        transform: scale(1.22);
     }
 
     .about_description p {
@@ -1625,11 +1639,17 @@ main {
         top: 12px;
     }
 
-    .about_description .personal_picture {
+    .about_description .personal_picture_frame {
         width: 136px;
         height: 136px;
+    }
+
+    .about_description .personal_picture {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: 35% center;
+        transform: scale(1.22);
     }
 
     marquee {
@@ -2066,6 +2086,11 @@ main {
     max-width: 360px;
     color: rgba(255, 255, 255, 0.75);
     margin: 0;
+}
+
+a[href="mailto:hello@almutazelamin.com"]:hover,
+a[href="mailto:hello@almutazelamin.com"]:focus-visible {
+    font-weight: 700;
 }
 
 .work_scroll_indicator {
