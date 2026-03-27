@@ -29,7 +29,9 @@
         </div>
     </div>
 
-    <header>
+    <header id="main_header" style="display:none;">
+
+    <!-- Main header is now hidden until loader is done -->
         <img src="img/logos/Professional Logo.png" alt="Personal Logo" class="logo">
         <a href="mailto:hello@almutazelamin.com" class="mail_icon" aria-label="Send email"><img src="img/icons/envelope.png" alt="" aria-hidden="true"></a>
         <div class="personal_info">
@@ -41,7 +43,7 @@
 
     <marquee behavior="scroll" direction="">ALWAYS PUT AN EMPHASIS ON CREATING MEMORABLE EXPERIENCES THAT TRANCEND OBJECTIVE</marquee>
 
-    <main>
+    <main id="main_content" style="display:none;">
 
         <div class = "name_occupation">
             <h2>ALMUTAZ ELAMIN</h2>
@@ -93,6 +95,27 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+        <script src="script.js"></script>
+        <script>
+        // Show main content and header only after loader is done
+        (function() {
+            var loader = document.getElementById('site_loader');
+            var mainContent = document.getElementById('main_content');
+            var mainHeader = document.getElementById('main_header');
+            function showMain() {
+                if (mainContent) mainContent.style.display = '';
+                if (mainHeader) mainHeader.style.display = '';
+            }
+            if (!loader) {
+                showMain();
+                return;
+            }
+            if (loader.classList.contains('is_done') || loader.style.display === 'none') {
+                showMain();
+                return;
+            }
+            loader.addEventListener('transitionend', showMain, { once: true });
+        })();
+        </script>
 </body>
 </html>

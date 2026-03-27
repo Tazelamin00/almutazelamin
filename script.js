@@ -211,6 +211,13 @@ if (workMarquee) {
 
   updateWorkMarqueeSpeed();
   window.addEventListener('resize', updateWorkMarqueeSpeed);
+
+  // Resume marquee if it was paused
+  if (typeof workMarquee.start === 'function') {
+    workMarquee.start();
+  } else {
+    workMarquee.setAttribute('scrollamount', workMarquee.scrollAmount);
+  }
 }
 
 // Home + About page marquee speed (slower on mobile)
@@ -225,6 +232,15 @@ if (homeAndAboutMarquees.length > 0) {
 
   updateHomeAndAboutMarqueeSpeed();
   window.addEventListener('resize', updateHomeAndAboutMarqueeSpeed);
+
+  // Resume all marquees if they were paused
+  homeAndAboutMarquees.forEach(function (marqueeElement) {
+    if (typeof marqueeElement.start === 'function') {
+      marqueeElement.start();
+    } else {
+      marqueeElement.setAttribute('scrollamount', marqueeElement.scrollAmount);
+    }
+  });
 }
 
 // About + Work menu button opens dedicated navigation page
