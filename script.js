@@ -20,42 +20,118 @@
   } catch (e) {}
 
     var pctLabel = document.getElementById('loader_pct_label');
+    
+    // Track actual resource loading
+    var totalResources = 0;
+    var loadedResources = 0;
+    var minLoadTime = 1500; // Minimum time to show loader (ms)
+    var maxLoadTime = 30000; // Maximum time before forcing completion (ms)
+    var startTime = Date.now();
+    var loaderFinished = false;
 
-    var current = 0;
-
-    function tick() {
-        if (current >= 100) {
-            pctLabel.textContent = '100';
-            setTimeout(function () {
-                loader.classList.add('is_done');
-                loader.addEventListener('transitionend', function () {
-                    loader.remove();
-                }, { once: true });
-            }, 350);
-            return;
+    // Count all images and videos on the page
+    function countResources() {
+        var images = document.querySelectorAll('img');
+        var videos = document.querySelectorAll('video source');
+        totalResources = images.length + videos.length + 1; // +1 for DOM ready
+        
+        if (totalResources < 2) {
+            totalResources = 2; // Ensure minimum count
         }
-
-        var inc;
-        if      (current < 15) { inc = Math.random() * 2.8 + 1.0; }
-        else if (current < 65) { inc = Math.random() * 1.2 + 0.3; }
-        else if (current < 88) { inc = Math.random() * 2.0 + 0.7; }
-        else                   { inc = Math.random() * 3.0 + 1.2; }
-
-        current = Math.min(current + inc, 100);
-        var display = String(Math.floor(current)).padStart(2, '0');
-
-        pctLabel.textContent = display;
-
-        var delay;
-        if      (current < 15) { delay = 55;  }
-        else if (current < 65) { delay = 115; }
-        else if (current < 88) { delay = 55;  }
-        else                   { delay = 38;  }
-
-        setTimeout(tick, delay);
     }
 
-    setTimeout(tick, 180);
+    // Update progress based on loaded resources
+    function updateProgress() {
+        if (loaderFinished) return;
+        
+        var elapsed = Date.now() - startTime;
+        var resourceProgress = (loadedResources / totalResources) * 80; // 80% from resources
+        var timeProgress = Math.min((elapsed / minLoadTime) * 20, 20); // 20% from time
+        var current = Math.min(resourceProgress + timeProgress, 99);
+        
+        var display = String(Math.floor(current)).padStart(2, '0');
+        pctLabel.textContent = display;
+    }
+
+    // Finish the loader
+    function finishLoader() {
+        if (loaderFinished) return;
+        loaderFinished = true;
+        
+        pctLabel.textContent = '100';
+        setTimeout(function () {
+            loader.classList.add('is_done');
+            loader.addEventListener('transitionend', function () {
+                loader.remove();
+            }, { once: true });
+        }, 350);
+    }
+
+    // Track when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+            countResources();
+            loadedResources++;
+            updateProgress();
+        });
+    } else {
+        countResources();
+        loadedResources++;
+        updateProgress();
+    }
+
+    // Track image loading
+    var images = document.querySelectorAll('img');
+    images.forEach(function (img) {
+        function onImageLoad() {
+            loadedResources++;
+            updateProgress();
+        }
+        
+        if (img.complete) {
+            onImageLoad();
+        } else {
+            img.addEventListener('load', onImageLoad);
+            img.addEventListener('error', onImageLoad); // Count failed loads too
+        }
+    });
+
+    // Track video loading
+    var videos = document.querySelectorAll('video source');
+    videos.forEach(function (source) {
+        var video = source.closest('video');
+        if (video) {
+            function onVideoLoad() {
+                loadedResources++;
+                updateProgress();
+            }
+            
+            if (video.readyState >= 1) {
+                onVideoLoad();
+            } else {
+                video.addEventListener('loadedmetadata', onVideoLoad, { once: true });
+                video.addEventListener('error', onVideoLoad, { once: true });
+            }
+        }
+    });
+
+    // Check periodically if we should finish
+    var checkInterval = setInterval(function () {
+        var elapsed = Date.now() - startTime;
+        
+        // Finish if minimum time has passed and resources are loaded
+        if (elapsed >= minLoadTime && loadedResources >= totalResources - 1) {
+            clearInterval(checkInterval);
+            finishLoader();
+        }
+        // Force finish after max time
+        else if (elapsed >= maxLoadTime) {
+            clearInterval(checkInterval);
+            finishLoader();
+        }
+        
+        updateProgress();
+    }, 50);
 })();
 // ──────────────────────────────────────────────────────────────
 

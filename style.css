@@ -364,7 +364,7 @@ header {
 marquee {
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
-    margin-top: 20px;
+    margin-top: 28px;
     padding: 4px 24px;
 }
 
@@ -1002,7 +1002,7 @@ main {
     }
 
     marquee {
-        margin-top: 8px;
+        margin-top: 16px;
         padding: 4px 12px;
         font-size: 13px;
     }
@@ -1061,7 +1061,7 @@ main {
 
     .about_description .information {
         max-width: 700px;
-        font-size: 13px;
+        font-size: 15px;
         line-height: 1.6;
     }
 
@@ -1414,7 +1414,7 @@ main {
 
     .about_page marquee {
         display: block;
-        margin-top: calc(72px + env(safe-area-inset-top));
+        margin-top: calc(82px + env(safe-area-inset-top));
     }
 
     .work_page marquee {
@@ -1676,11 +1676,11 @@ main {
     }
 
     .about_page marquee {
-        margin-top: calc(100px + env(safe-area-inset-top));
+        margin-top: calc(112px + env(safe-area-inset-top));
     }
 
     .work_page marquee {
-        margin-top: calc(100px + env(safe-area-inset-top));
+        margin-top: calc(112px + env(safe-area-inset-top));
     }
 
     .about_page header .navigation_links,
@@ -1842,7 +1842,7 @@ main {
     }
 
     .home_page marquee {
-        margin-top: calc(100px + env(safe-area-inset-top));
+        margin-top: calc(112px + env(safe-area-inset-top));
     }
 
     .home_page .work_link {
@@ -2021,7 +2021,7 @@ main {
     gap: 0;
     padding: 14px 0 12px;
 }
-
+ 
 .work_project_dots {
     display: flex;
     gap: 6px;
